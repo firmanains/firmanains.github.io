@@ -1,0 +1,3 @@
+.DS_Store
+# local knowledge base for the site; contains internal system details, not for the public repo
+content/
