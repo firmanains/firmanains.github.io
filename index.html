@@ -151,6 +151,25 @@
         </article>
 
         <article class="entry">
+          <p class="ref"><span>Kafka high availability</span><span class="year">2026</span></p>
+          <h3>Replication that only existed on paper</h3>
+          <p class="context">
+            The same email platform ran three Kafka brokers, which sounds redundant until you notice
+            all three were containers on one host. When that host's disk filled up they died
+            together and roughly 10 hours of notification email went nowhere. I planned and ran the
+            move to three separate hosts myself.
+          </p>
+          <ul class="did">
+            <li>Lift and shift rather than a fresh cluster: each broker's data directory moved as it was, so broker identity, consumer offsets and topics came along without a partition reassignment.</li>
+            <li>KRaft quorum and advertised listeners repointed from container hostnames to real addresses, the one change that actually had to happen for brokers on different machines to find each other.</li>
+            <li>The calling application has no retry and does not keep the payload on failure, so I wrote a stand-in HTTP service that answered on the same port, persisted every request to disk before replying 200, and replayed them afterwards. It was rehearsed on a spare port days before, not first run during the window.</li>
+            <li>Wrote the runbook, the rollback decision rule, and a troubleshooting section for each failure point, so the migration did not depend on me improvising at 22:00.</li>
+          </ul>
+          <p class="outcome"><strong>Outcome</strong> 16 minutes of downtime, 13 in-flight emails captured and all 13 replayed successfully, zero lost. Then we stopped a broker on purpose: the cluster kept its leader, kept serving, and recovered full replication when it came back.</p>
+          <p class="stack">Apache Kafka (KRaft) · Docker Compose · Python · Bash · Ubuntu</p>
+        </article>
+
+        <article class="entry">
           <p class="ref"><span>Lakehouse API</span><span class="year">2026</span></p>
           <h3>A partner-facing lookup API that stopped taking down the warehouse</h3>
           <p class="context">
