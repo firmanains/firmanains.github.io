@@ -4,8 +4,8 @@ Personal site of Firman Aulia Insani. Plain HTML + CSS + a few lines of JS — n
 
 ```
 index.html          the page
-style.css           all styling (light + dark via prefers-color-scheme and a toggle)
-script.js           theme toggle
+style.css           gruvbox terminal theme, boot/typing animations
+script.js           uptime, tmux clock + active window, interactive prompt
 .nojekyll           tells GitHub Pages to serve files as-is
 ```
 
@@ -32,5 +32,5 @@ Every later `git push` to `main` redeploys automatically.
 ## Editing
 
 - Content lives directly in `index.html`; sections are marked with `<!-- ===== -->` comments.
-- Colours and type are CSS custom properties at the top of `style.css`.
-- To add a case study, copy one `<article class="entry">` block. To add a project, copy one `<article class="project">`.
+- Colours are Gruvbox tokens at the top of `style.css`.
+- To add a case study: add a line to the `ls -l` list and copy one `<article class="md">` block. To add a project: copy one `<li>` in the `tree`.
